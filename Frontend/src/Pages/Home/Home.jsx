@@ -4,13 +4,15 @@ import "./Home.css"
 import Header from '../../Components/Header/Header'
 import ExploreMenu from '../../Components/ExploreMenu/ExploreMenu'
 import Fooddisplay from '../../Components/Fooddisplay/Fooddisplay'
+import AppDownload from '../../Components/AppDownload/AppDownload'
 function Home() {
-  const [category, setcategory] = useState('all')
+  const [category, setcategory] = useState('All')
   return (
     <div>
       <Header/>
       <ExploreMenu category={category} setcategory={setcategory}/>
       <Fooddisplay category={category} setcategory={setcategory}/>
+      <AppDownload/>
     </div>
   )
 }

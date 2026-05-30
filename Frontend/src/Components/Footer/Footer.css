@@ -1,0 +1,99 @@
+.footer {
+  background-color: #323232;
+  color: #fff;
+  padding: 40px 8%;
+  margin-top: 60px;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 30px;
+}
+
+/* Left */
+.footer-content-left img {
+  width: 120px;
+  margin-bottom: 20px;
+  filter: brightness(0) invert(1); /* ✅ makes logo white on dark bg */
+}
+
+.footer-content-left p {
+  color: #d4d4d4;
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.footer-social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.footer-social-icons img {
+  width: 35px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.footer-social-icons img:hover {
+  transform: translateY(-3px);
+}
+
+/* Center & Right */
+.footer-content-center h2,
+.footer-content-right h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.footer-content-center ul,
+.footer-content-right ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-content-center ul li,
+.footer-content-right ul li {
+  color: #d4d4d4;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.footer-content-center ul li:hover,
+.footer-content-right ul li:hover {
+  color: tomato;
+}
+
+/* Divider */
+.footer hr {
+  border: none;
+  border-top: 1px solid #4a4a4a;
+  margin-bottom: 20px;
+}
+
+/* Copyright */
+.footer-copyright {
+  text-align: center;
+  color: #a0a0a0;
+  font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 750px) {
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+  }
+  .footer-copyright{
+    text-align:center;
+  }
+}
