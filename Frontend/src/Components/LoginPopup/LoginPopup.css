@@ -1,0 +1,120 @@
+/* LoginPopup.css */
+
+.login-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-popup-container {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.login-popup-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.login-popup-title h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+}
+
+.login-popup-title img {
+  width: 16px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.login-popup-title img:hover {
+  opacity: 0.6;
+}
+
+.login-popup-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.login-popup-inputs input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border 0.2s;
+}
+
+.login-popup-inputs input:focus {
+  border-color: #ff6b35;
+}
+
+.login-popup-container button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #ff6b35;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.login-popup-container button[type="submit"]:hover {
+  background-color: #e55a25;
+}
+
+.login-popup-condition {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.login-popup-condition input[type="checkbox"] {
+  margin-top: 3px;
+  accent-color: #ff6b35;
+  cursor: pointer;
+}
+
+.login-popup-condition p {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.login-popup-container > p {
+  font-size: 13px;
+  color: #555;
+  text-align: center;
+}
+
+.login-popup-container > p span {
+  color: #ff6b35;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.login-popup-container > p span:hover {
+  color: #e55a25;
+}
