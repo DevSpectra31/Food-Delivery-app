@@ -1,0 +1,11 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "\" A food delivery website to unnderstand workflow of zomatato and swiggy in real life\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run dev"
+  },
+  "author": "Vineet Rajpal",
+  "license": "ISC"
+}
