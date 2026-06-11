@@ -1,15 +1,64 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
-const userSchema = new mongoose.Schema(
+const UserSchema = new Schema(
   {
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    role: { type: String, default:"user" },
-    cartData: { type: Object, default: {} },
+    name: {
+      type: String,
+      required: true,
+    },
+
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+    },
+
+    password: {
+      type: String,
+      required: true,
+    },
+
+    role: {
+      type: String,
+      default: "user",
+    },
+
+    cartData: {
+      type: Object,
+      default: {},
+    },
   },
-  { minimize: false }
+  {
+    timestamps: true,
+  }
 );
 
-const userModel = mongoose.model.user || mongoose.model("user", userSchema);
-export default userModel;
+// Hash password before save
+UserSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
+
+  this.password = await bcrypt.hash(this.password, 10);
+});
+
+// Compare password
+UserSchema.methods.isPasswordCorrect = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
+
+// Generate JWT
+UserSchema.methods.generateToken = function () {
+  return jwt.sign(
+    {
+      _id: this._id,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "2d",
+    }
+  );
+};
+
+export const User = mongoose.model("User", UserSchema);
