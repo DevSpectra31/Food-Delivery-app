@@ -6,7 +6,7 @@ import cookie from "cookie-parser"
 // register user
 export const registerUser = async(req,res)=>{
     try {
-    const {name,email,password}=req.body
+    const {name,email,password,role}=req.body
     const existedUser = await User.findOne({email})
     if(existedUser){
         return res.status(404).json({
@@ -27,6 +27,7 @@ export const registerUser = async(req,res)=>{
         name : name,
         email:email,
         password : password,
+        role : role,
     })
     const token = user.generateToken()
     const createduser = await User.findById(user._id).select("-password")

@@ -1,4 +1,4 @@
-import React ,{useState} from "react";
+import React ,{useEffect, useState} from "react";
 import "./Add.css";
 import { assets } from "../../assets/assets";
 
@@ -15,6 +15,9 @@ const Add = () => {
     const value = event.target.value;
     setData((data) => ({ ...data, [name]: value }));
   };
+  useEffect(()=>{
+    console.log(data)
+  },[data])
   return (
     <div className="add">
       <form className="add-form">
@@ -30,6 +33,8 @@ const Add = () => {
         <div className="add-product-name">
           <p>Product Name</p>
           <input
+            onChange={onChangeHandler}
+            value={data.name}
             type="text"
             name="name"
             placeholder="Type here"
@@ -40,6 +45,8 @@ const Add = () => {
         <div className="add-product-description">
           <p>Product Description</p>
           <textarea
+          onChange={onChangeHandler}
+          value={data.description}
             name="description"
             rows="6"
             placeholder="Write content here"
@@ -51,7 +58,9 @@ const Add = () => {
 
           <div className="add-category">
             <p>Product Category</p>
-            <select name="category">
+            <select name="category" 
+            onChange={onChangeHandler}
+            value={data.category}>
               <option value="Salad">Salad</option>
               <option value="Rolls">Rolls</option>
               <option value="Deserts">Deserts</option>
@@ -70,6 +79,8 @@ const Add = () => {
               name="price"
               placeholder="$20"
               required
+              onChange={onChangeHandler}
+              value={data.price}
             />
           </div>
 
