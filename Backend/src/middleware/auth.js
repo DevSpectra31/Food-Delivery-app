@@ -18,7 +18,12 @@
 import jwt from "jsonwebtoken";
 
 const authMiddleware = async (req, res, next) => {
-  const token = req.cookies.token;
+    console.log("===== AUTH MIDDLEWARE CALLED =====");
+
+  console.log("Headers:", req.headers);
+  console.log("Cookies:", req.cookies);
+  const token = req.cookies.token || req.headers.token;
+  console.log(token)
   if (!token) {
     return res.json({
       success: false,
@@ -28,14 +33,15 @@ const authMiddleware = async (req, res, next) => {
 
   try {
     const token_decode = jwt.verify(token, process.env.JWT_SECRET);
-   // console.log("decoded_token : ",token_decode)
-    req.body.userId = token_decode._id;
+    console.log("decoded_token : ",token_decode)
+   //console.log(token_decode)
+    req.userId = token_decode._id
     next();
   } catch (error) {
     console.log(error);
     res.json({
       success: false,
-      message: "Error",
+      message: error.message
     });
   }
 };

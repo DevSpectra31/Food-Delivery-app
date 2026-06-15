@@ -9,6 +9,7 @@ const Add = () => {
     const url = "http://localhost:5000"
     const [image, setimage] = useState(null)
     const {token,admin} = useContext(StoreContext);
+    
       const [data, setData] = useState({
     name: "",
     description: "",
@@ -21,10 +22,13 @@ const Add = () => {
     const value = event.target.value;
     setData((data) => ({ ...data, [name]: value }));
   };
+    if (!token) {
+    return <Navigate to="/login" replace />;
+  }
   const onSubmitHandler = async(e)=>{
     e.preventDefault();
-      console.log("Token from context:", token);
-  console.log("Admin from context:", admin);
+       console.log("Token from context:", token);
+      // console.log("Admin from context:", admin);
     const formData = new FormData()
     formData.append("name", data.name);
     formData.append("description", data.description);
@@ -44,6 +48,11 @@ const Add = () => {
       toast.success(response.data.message);
       console.log("food got uploaded")
     } else {
+     if (response.data.message === "Not Authorized Login Again") {
+    localStorage.removeItem("token");
+    navigate("/login");
+    return;
+     }
       toast.error(response.data.message);
     }
   }
@@ -122,6 +131,5 @@ const Add = () => {
       </form>
     </div>
   );
-};
-
+}
 export default Add;

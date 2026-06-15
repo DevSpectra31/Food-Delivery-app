@@ -14,8 +14,8 @@ const addFood = async (req, res) => {
     image: image_filename,
   });
   try {
-   console.log("userId:", req.body.userId);
-    let userData = await User.findById(req.body.userId);
+    let userData = await User.findById(req.body._userId);
+    console.log("user data : ",userData)
     if (userData && userData.role === "admin") {
       await food.save();
       res.json({ success: true, message: "Food Added",food });
@@ -35,7 +35,7 @@ const listFood = async (req, res) => {
     res.json({ success: true, data: foods });
   } catch (error) {
     console.log(error);
-    res.json({ success: false, message: "Error" });
+    res.json({ success: false, message: error });
   }
 };
 
