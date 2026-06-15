@@ -11,12 +11,17 @@ const List = ({ url }) => {
   const { token,admin } = useContext(StoreContext);
   const [list, setList] = useState([]);
   const fetchList = async () => {
-    const response = await axios.get('http://localhost:5000/api/v1/food/list',list);
-    console.log(response.data)
+    const response = await axios.get('http://localhost:5000/api/v1/food/list',{
+      headers:{
+        token : localStorage.getItem("token")
+      }
+    });
+    console.log(response)
     if (response.data.success) {
       setList(response.data.data);
     } else {
       toast.error("Error");
+      navigate("/login")
     }
   };
 
@@ -36,7 +41,7 @@ const List = ({ url }) => {
   useEffect(() => {
     if (!admin && !token) {
       toast.error("Please Login First");
-      navigate("/");
+      navigate("/login");
     }
     fetchList();
   }, []);
@@ -55,7 +60,7 @@ const List = ({ url }) => {
         {list.map((item, index) => {
           return (
             <div key={index} className="list-table-format">
-              <img src={`${url}/images/` + item.image} alt="" />
+              <img src={`http://localhost:5000/images/${item.image}`} alt="" />
               <p>{item.name}</p>
               <p>{item.category}</p>
               <p>${item.price}</p>

@@ -14,7 +14,7 @@ const addFood = async (req, res) => {
     image: image_filename,
   });
   try {
-    let userData = await User.findById(req.body._userId);
+    let userData = await User.findById(req.userId);
     console.log("user data : ",userData)
     if (userData && userData.role === "admin") {
       await food.save();

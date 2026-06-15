@@ -18,6 +18,7 @@ app.use(cors({
     origin: "http://localhost:5173",
 }))
 app.use(cookieParser())
+app.use("/images",express.static("uploads"))
 
 //db connection 
 await connectdb()
