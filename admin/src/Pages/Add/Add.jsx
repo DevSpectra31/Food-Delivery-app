@@ -1,23 +1,52 @@
-import React ,{useEffect, useState} from "react";
+import React ,{useEffect, useState ,useContext} from "react";
 import "./Add.css";
 import { assets } from "../../assets/assets";
-
+import { StoreContext } from "../../Context/StoreContext";
+import axios from "axios";
+import {toast} from "react-toastify"
+import { Navigate, useNavigate } from "react-router-dom";
 const Add = () => {
+    const url = "http://localhost:5000"
     const [image, setimage] = useState(null)
+    const {token,admin} = useContext(StoreContext);
       const [data, setData] = useState({
     name: "",
     description: "",
     price: "",
     category: "Salad",
   });
+  const navigate=useNavigate()
    const onChangeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     setData((data) => ({ ...data, [name]: value }));
   };
-  useEffect(()=>{
-    console.log(data)
-  },[data])
+  const onSubmitHandler = async(e)=>{
+    e.preventDefault();
+      console.log("Token from context:", token);
+  console.log("Admin from context:", admin);
+    const formData = new FormData()
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("price", Number(data.price));
+    formData.append("category", data.category);
+    formData.append("image", image);
+        const response = await axios.post('http://localhost:5000/api/v1/food/add', formData,{headers:{token}});
+        console.log(response.data)
+    if (response.data.success) {
+      setData({
+        name: "",
+        description: "",
+        price: "",
+        category: "Salad",
+      });
+      setimage(false);
+      toast.success(response.data.message);
+      console.log("food got uploaded")
+    } else {
+      toast.error(response.data.message);
+    }
+  }
   return (
     <div className="add">
       <form className="add-form">
@@ -86,7 +115,7 @@ const Add = () => {
 
         </div>
 
-        <button type="submit" className="add-btn">
+        <button onClick={onSubmitHandler} type="submit" className="add-btn">
           ADD
         </button>
 

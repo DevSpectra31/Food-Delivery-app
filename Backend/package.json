@@ -11,6 +11,7 @@
   "author": "Vineet Rajpal",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1068.0",
     "bcrypt": "^6.0.0",
     "body-parser": "^2.2.2",
     "cookie-parser": "^1.4.7",

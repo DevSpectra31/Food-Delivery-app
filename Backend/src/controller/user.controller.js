@@ -71,5 +71,8 @@ export const loginUser = async (req, res) => {
     .json({
       message: "user logged in successfully",
       user: existedUser,
+      success:true,
+      token,
+      role:existedUser.role,
     });
 }
