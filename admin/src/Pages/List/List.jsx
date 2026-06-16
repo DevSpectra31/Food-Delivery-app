@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import React, { useEffect, useState } from "react";
 import "./List.css";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useId } from "react";
 import { useContext } from "react";
 import { StoreContext } from "../../Context/StoreContext";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 
 const List = ({ url }) => {
   const navigate = useNavigate();
@@ -26,16 +28,23 @@ const List = ({ url }) => {
   };
 
   const removeFood = async (foodId) => {
-    const response = await axios.post(
-      `${url}/api/food/remove`,
-      { id: foodId },
-      { headers: { token } }
+    console.log("foodId :",foodId)
+    console.log("Token : ",localStorage.getItem(token))
+    const response = await axios.delete(
+      "http://localhost:5000/api/v1/food/remove",
+      {id:foodId},
+      { headers: { 
+        token : localStorage.getItem("token")
+       } },
     );
-    await fetchList();
+    console.log("food deleted : ",response.data)
     if (response.data.success) {
       toast.success(response.data.message);
+      console.log("food deleted successfully :")
+      await fetchList()
     } else {
       toast.error("Error");
+      navigate("/login")
     }
   };
   useEffect(() => {

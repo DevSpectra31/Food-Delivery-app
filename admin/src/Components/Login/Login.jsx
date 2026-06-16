@@ -23,6 +23,7 @@ const Login = ({ url }) => {
     const response = await axios.post("http://localhost:5000/api/v1/users/login", data);
     console.log("FULL RESPONSE:", response.data);
     if (response.data.success) {
+      console.log("token :",localStorage.getItem(token))
       if (response.data.role === "admin") {
         setToken(response.data.token);
         setAdmin(true);

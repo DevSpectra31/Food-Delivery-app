@@ -62,6 +62,7 @@ export const loginUser = async (req, res) => {
   }
 
   const token = user.generateToken();
+  console.log(token)
 
   const existedUser = await User.findById(user._id).select("-password").lean();
 
