@@ -18,12 +18,12 @@
 import jwt from "jsonwebtoken";
 
 const authMiddleware = async (req, res, next) => {
-    console.log("===== AUTH MIDDLEWARE CALLED =====");
+   // console.log("===== AUTH MIDDLEWARE CALLED =====");
 
-  //console.log("Headers:", req.headers);
+ // console.log("Headers:", req.headers);
  // console.log("Cookies:", req.cookies);
   const token = req?.cookies.token || req?.headers.token;
-  console.log(token)
+  console.log("token : ",token)
   if (!token) {
     return res.json({
       success: false,
@@ -33,7 +33,7 @@ const authMiddleware = async (req, res, next) => {
 
   try {
     const token_decode = jwt.verify(token, process.env.JWT_SECRET);
-    console.log("decoded_token : ",token_decode)
+    //console.log("decoded_token : ",token_decode)
    //console.log(token_decode)
     req.userId = token_decode._id
     next();

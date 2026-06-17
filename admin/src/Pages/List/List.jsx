@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/set-state-in-effect */
 import React, { useEffect, useState } from "react";
 import "./List.css";
@@ -5,6 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useId } from "react";
 import { useContext } from "react";
+import {assets} from "../../assets/assets.js"
 import { StoreContext } from "../../Context/StoreContext";
 import { data, useNavigate } from "react-router-dom";
 
@@ -28,25 +30,35 @@ const List = ({ url }) => {
   };
 
   const removeFood = async (foodId) => {
-    console.log("foodId :",foodId)
-    console.log("Token : ",localStorage.getItem(token))
+  try {
+    console.log("foodId :", foodId);
+    console.log("token :", token);
+
     const response = await axios.delete(
       "http://localhost:5000/api/v1/food/remove",
-      {id:foodId},
-      { headers: { 
-        token : localStorage.getItem("token")
-       } },
+      {
+        data: {
+          id: foodId,
+        },
+        headers: {
+          token : localStorage.getItem("token")
+        },
+      }
     );
-    console.log("food deleted : ",response.data)
+
+    console.log(response.data);
+
     if (response.data.success) {
       toast.success(response.data.message);
-      console.log("food deleted successfully :")
-      await fetchList()
+      fetchList();
     } else {
-      toast.error("Error");
-      navigate("/login")
+      toast.error(response.data.message);
     }
-  };
+  } catch (error) {
+    console.log(error);
+    toast.error(error.message);
+  }
+};
   useEffect(() => {
     if (!admin && !token) {
       toast.error("Please Login First");
@@ -69,12 +81,12 @@ const List = ({ url }) => {
         {list.map((item, index) => {
           return (
             <div key={index} className="list-table-format">
-              <img src={`http://localhost:5000/images/${item.image}`} alt="" />
+              <img src={`http://localhost:5000/images/${item.image}`}  alt="" />
               <p>{item.name}</p>
               <p>{item.category}</p>
               <p>${item.price}</p>
               <p onClick={() => removeFood(item._id)} className="cursor">
-                X
+                <img src={assets.delete_logo} alt="" width='20px' />
               </p>
             </div>
           );

@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { connectdb } from "./src/db/index.js";
 import UserRoute from "./src/route/user.route.js"
 import FoodRoute from "./src/route/food.route.js"
+import CartRouter from "./src/route/cart.route.js"
 import cookieParser from "cookie-parser";
 dotenv.config({path:"./.env"});
 
@@ -25,6 +26,7 @@ await connectdb()
 //api endpoints
 app.use("/api/v1/users",UserRoute)
 app.use("/api/v1/food",FoodRoute)
+app.use("/api/v1/cart",CartRouter)
 
 app.listen(port,()=>{
     console.log(`The app is running on the port : ${port}`)
