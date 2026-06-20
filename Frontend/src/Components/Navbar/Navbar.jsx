@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import "./Navbar.css"
 import { assets } from '../../assets/assets'
 import { Link } from 'react-router-dom'
+import { StoreContext } from '../../Context/StoreContext'
 
 const Navbar = ({ setshowLogin }) => {
   const [menu, setmenu] = useState('home')
+  const { token, logout } = useContext(StoreContext)
 
   return (
     <div className='navbar'>
@@ -48,7 +50,11 @@ const Navbar = ({ setshowLogin }) => {
           </Link>
           <div className='dot'></div>
         </div>
-        <button onClick={() => setshowLogin(true)}>Sign in</button>
+        {token ? (
+          <button onClick={logout} className="logout-btn">Logout</button>
+        ) : (
+          <button onClick={() => setshowLogin(true)}>Sign in</button>
+        )}
       </div>
     </div>
   )
