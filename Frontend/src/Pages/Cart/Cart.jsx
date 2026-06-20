@@ -1,6 +1,7 @@
+/* eslint-disable no-undef */
 import React, { useContext } from "react";
 import "./Cart.css";
-import { StoreContext } from "../../Context/StoreContext";
+import { StoreContext } from  "../../Context/StoreContext"
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
@@ -9,7 +10,7 @@ const Cart = () => {
         cartItems,
         setcartItems,
         addToCart,
-        removefromCart,
+        removeFromCart,
         url,
         getTotalCartAmount,
   } = useContext(StoreContext);
@@ -34,12 +35,12 @@ const Cart = () => {
             return (
               <div>
                 <div className="cart-items-title cart-items-item">
-                  <img src={url+"/images/"+item.image} alt="" />
+                  <img src={`http://localhost:5000/images/${item.image}`} alt="" />
                   <p>{item.name}</p>
                   <p>${item.price}</p>
                   <p>{cartItems[item._id]}</p>
                   <p>${item.price * cartItems[item._id]}</p>
-                  <p onClick={() => removefromCart(item._id)} className="cross">
+                  <p onClick={() =>  removeFromCart(item._id)} className="cross">
                     x
                   </p>
                 </div>

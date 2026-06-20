@@ -73,8 +73,8 @@ const StoreContextProvider = (props) => {
   };
 
   const loadCardData = async (token) => {
-    const response = await axios.post(
-      url + "api/v1/food/cart/list",
+    const response = await axios.get(
+      url + "api/v1/cart/list",
       {},
       { headers: { token } }
     );
