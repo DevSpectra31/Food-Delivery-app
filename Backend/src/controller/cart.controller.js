@@ -69,6 +69,7 @@ export const getCartItems = async (req, res) => {
     try{
         const user = await User.findById(req.userId);
         const cartData = user.cartData || {};
+        console.log("cartdata : ",cartData)
         const itemIds = Object.keys(cartData);
         const items = await foodModel.find({ _id: { $in: itemIds } });
         const cartItems = items.map(item => ({
