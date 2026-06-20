@@ -14,7 +14,6 @@ export const placeOrder = async (req, res) => {
 
     let totalAmount = 0;
     let orderItems = [];
-
     for (const item of req.body.items) {
       const food = await foodModel.findById(item.foodId);
 
@@ -49,17 +48,17 @@ export const placeOrder = async (req, res) => {
     await User.findByIdAndUpdate(userId, {
       cartData: {},
     });
-
     const razorpayOrder = await razorpay.orders.create({
       amount: totalAmount * 100,
       currency: "INR",
-      receipt: `order_${order._id}`,
+      receipt: order._id,
     });
+
 
     res.status(200).json({
       success: true,
-      orderId: order._Id,
       razorpayOrder,
+      order,
     });
 
   } catch (error) {
@@ -73,10 +72,11 @@ export const placeOrder = async (req, res) => {
 
 export const verifyorder = async (req, res) => {
   try {
-    const { orderId, success } = req.body;
-    console.log("received order : ",orderId)
-    const order = await Order.findById(orderId);
-
+    const {orderId,success} = req.body;
+    console.log("order id : ",orderId)
+    console.log("type of" , typeof(success))
+   const order = await Order.findOne({_id : orderId})
+   console.log("order : ",order)
     if (!order) {
       return res.status(404).json({
         success: false,
@@ -84,7 +84,7 @@ export const verifyorder = async (req, res) => {
       });
     }
 
-    if (success === true) {
+    if (success === true || success === "true") {
       await Order.findByIdAndUpdate(orderId, {
         payment: true,
       });
