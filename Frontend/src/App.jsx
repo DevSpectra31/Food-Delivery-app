@@ -7,6 +7,7 @@ import PlaceOrder from './Pages/PlaceOrder/PlaceOrder'
 import Footer from './Components/Footer/Footer'
 import LoginPopup from './Components/LoginPopup/LoginPopup'
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute'
+import Verify from './Pages/Verify/Verify'
 
 function App() {
   const [showLogin, setshowLogin] = useState(false)
@@ -48,7 +49,14 @@ function App() {
           />
 
           <Route path='/login' element={<LoginPopup />} />
-
+           <Route
+            path='/verify'
+            element={
+              <ProtectedRoute>
+                <Verify/>
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
 

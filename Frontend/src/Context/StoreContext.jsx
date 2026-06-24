@@ -30,7 +30,7 @@ const StoreContextProvider = (props) => {
 
     try {
       const response = await axios.post(
-        url + "api/v1/food/cart/add",
+        url + "api/v1/cart/add",
         { itemId },
         { headers: { token } }
       );
@@ -54,8 +54,8 @@ const StoreContextProvider = (props) => {
     }));
 
     try {
-      const response = await axios.post(
-        url + "api/v1/food/cart/remove",
+      const response = await axios.delete(
+        url + "api/v1/cart/remove",
         { itemId },
         { headers: { token } }
       );
@@ -90,13 +90,22 @@ const StoreContextProvider = (props) => {
 
   const fetchFoodList = async () => {
     try {
-      const response = await axios.get(url + "api/v1/food/list");
+      const response = await axios.get(url + "api/v1/food/list",{
+        headers: { token: localStorage.getItem("token") },
+      });
       console.log("food data : ",response.data)
-
+      if(!response.data.success){
+        toast.error(response.data.message);
+        localStorage.removeItem("token");
+        setToken("");
+        setCartItems({});
+      }
       if (response.data.success) {
+        console.log("food found")
         setFoodList(response.data.data);
       }
     } catch (error) {
+      console.log("food not found")
       console.log(error);
     }
   };
@@ -106,10 +115,13 @@ const StoreContextProvider = (props) => {
       const response = await axios.get(
         url + "api/v1/cart/list",
         {
-          headers: { token },
+          headers: {token: localStorage.getItem("token")},
         }
       );
-
+      if(!response.data.success) {
+        toast.error(response.data.message);
+        localStorage.removeItem("token"); 
+      }
       if (response.data.success) {
         setCartItems(response.data.cartData || {});
       }
@@ -118,14 +130,6 @@ const StoreContextProvider = (props) => {
       setCartItems({});
     }
   };
-
-  const logout = () => {
-    setToken("");
-    localStorage.removeItem("token");
-    setCartItems({});
-    toast.success("Logged out successfully");
-  };
-
   useEffect(() => {
     async function loadData() {
       await fetchFoodList();
@@ -151,7 +155,6 @@ const StoreContextProvider = (props) => {
     url,
     token,
     setToken,
-    logout,
   };
 
   return (
