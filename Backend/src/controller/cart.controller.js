@@ -68,14 +68,6 @@ export const removefromCart = async(req,res)=>{
 export const getCartItems = async (req, res) => {
     try{
         const user = await User.findById(req.userId);
-<<<<<<< HEAD
-        const cartData = user.cartData ;
-        if(!cartData){
-            return res.status(200).json({
-                message : "user cartdaata is empty"
-            })
-        }
-=======
         const cartData = user.cartData || {};
         console.log("cartdata : ",cartData)
         const itemIds = Object.keys(cartData);
@@ -84,7 +76,6 @@ export const getCartItems = async (req, res) => {
             ...item._doc,
             quantity: cartData[item._id] || 0
         }));
->>>>>>> 45c5b1d5ed66d1ee0f86477feba51868c1f1f236
         res.status(200).json(
         { success: true,
             message: "Cart items fetched successfully",
