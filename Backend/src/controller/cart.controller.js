@@ -8,7 +8,7 @@ export const addtocart = async (req, res) => {
         const itemId=req.body.itemId
         const food = await foodModel.findById(itemId)
         // console.log("User :",userData)
-        // console.log("CartData : ",userData.cartData)
+         console.log("CartData : ",userData.cartData)
         // console.log("Type : ",typeof userData.cartData)
         //if food exists
         if(!food){
@@ -27,7 +27,7 @@ export const addtocart = async (req, res) => {
         // Save to DB and return response
         res
           .status(200)
-          .json({ message: "Item added to cart successfully ",cartData : foodadded.cartData});
+          .json({ message: "Item added to cart successfully ",cartData ,});
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -58,7 +58,7 @@ export const removefromCart = async(req,res)=>{
         const foodremoved=await User.findByIdAndUpdate(req.userId,{cartData},{returnDocument : true})
         res.status(200).json({
             message : "Item removed from cart successfully",
-            cartData : foodremoved.cartData,
+            cartData,
         })
 } catch (error){
     res.status(500).json({ message: error.message });
@@ -68,6 +68,14 @@ export const removefromCart = async(req,res)=>{
 export const getCartItems = async (req, res) => {
     try{
         const user = await User.findById(req.userId);
+<<<<<<< HEAD
+        const cartData = user.cartData ;
+        if(!cartData){
+            return res.status(200).json({
+                message : "user cartdaata is empty"
+            })
+        }
+=======
         const cartData = user.cartData || {};
         console.log("cartdata : ",cartData)
         const itemIds = Object.keys(cartData);
@@ -76,10 +84,11 @@ export const getCartItems = async (req, res) => {
             ...item._doc,
             quantity: cartData[item._id] || 0
         }));
+>>>>>>> 45c5b1d5ed66d1ee0f86477feba51868c1f1f236
         res.status(200).json(
         { success: true,
             message: "Cart items fetched successfully",
-             data: cartItems });
+             data: cartData });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }

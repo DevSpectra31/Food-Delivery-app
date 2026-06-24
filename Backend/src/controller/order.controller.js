@@ -5,8 +5,9 @@ import Razorpay from "razorpay"
 
 export const placeOrder = async (req, res) => {
   try {
+    console.log("controller hit")
     const userId = req.userId;
-
+    console.log("userid : ",userId)
     const razorpay = new Razorpay({
       key_id: process.env.RAZORPAY_API_KEY,
       key_secret: process.env.RAZORPAY_SECRET_API_KEY,
@@ -15,12 +16,12 @@ export const placeOrder = async (req, res) => {
     let totalAmount = 0;
     let orderItems = [];
     for (const item of req.body.items) {
-      const food = await foodModel.findById(item.foodId);
-
+      const food = await foodModel.findById(item._id);
+      console.log("food : ",item.foodId)
       if (!food) {
         return res.status(404).json({
           success: false,
-          message: `Food not found: ${item.foodId}`,
+          message: `Food not found: ${item._id}`,
         });
       }
 
@@ -58,7 +59,6 @@ export const placeOrder = async (req, res) => {
     res.status(200).json({
       success: true,
       razorpayOrder,
-      order,
     });
 
   } catch (error) {
