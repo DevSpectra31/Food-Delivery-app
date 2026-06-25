@@ -8,6 +8,7 @@ import Footer from './Components/Footer/Footer'
 import LoginPopup from './Components/LoginPopup/LoginPopup'
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute'
 import Verify from './Pages/Verify/Verify'
+import ChatBot from './Components/Chatbot/Chatbot'
 
 function App() {
   const [showLogin, setshowLogin] = useState(false)
@@ -61,6 +62,7 @@ function App() {
       </div>
 
       <Footer />
+      <ChatBot/>
     </>
   )
 }
