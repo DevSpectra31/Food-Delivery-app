@@ -164,6 +164,7 @@ useEffect(() => {
     removeFromCart,
     getTotalCartAmount,
     url,
+    loadCartData,
     token,
     setToken,
   };
