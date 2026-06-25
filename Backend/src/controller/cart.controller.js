@@ -27,7 +27,11 @@ export const addtocart = async (req, res) => {
         // Save to DB and return response
         res
           .status(200)
-          .json({ message: "Item added to cart successfully ",cartData ,});
+          .json({
+            message: "Item added to cart successfully ",
+            cartData,
+            success : truen,
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -49,7 +53,7 @@ export const removefromCart = async(req,res)=>{
             message : "food not found"
         })
     }
-        if(cartData[itemId]){
+        if(cartData[itemId]>1){
             cartData[itemId] -= 1;
         }
         else{
@@ -59,6 +63,7 @@ export const removefromCart = async(req,res)=>{
         res.status(200).json({
             message : "Item removed from cart successfully",
             cartData,
+            success:true,
         })
 } catch (error){
     res.status(500).json({ message: error.message });
@@ -77,7 +82,9 @@ export const getCartItems = async (req, res) => {
         res.status(200).json(
         { success: true,
             message: "Cart items fetched successfully",
-             data: cartData });
+            success:true,
+            cartData:user.cartData || {}
+        });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }

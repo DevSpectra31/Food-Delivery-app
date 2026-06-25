@@ -5,11 +5,12 @@ import { StoreContext } from "../../Context/StoreContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { NavLink } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 const LoginPopup = ({ setshowLogin }) => {
   const { url, setToken } = useContext(StoreContext);
 
   const [currentState, setCurrentState] = useState("Login");
+  const navigate = useNavigate()
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -35,13 +36,13 @@ const LoginPopup = ({ setshowLogin }) => {
       }
 
       const response = await axios.post(newUrl, data);
-
+      console.log("reponse data : ",response.data)
       if (response.data.success) {
         setToken(response.data.token);
         localStorage.setItem("token", response.data.token);
 
         toast.success("Login Successfully");
-
+        navigate("/")
         // Close popup only if prop exists
         setshowLogin?.(false);
 
