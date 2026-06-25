@@ -47,28 +47,31 @@ const StoreContextProvider = (props) => {
   };
 
   const removeFromCart = async (itemId) => {
+  setCartItems((prev) => ({
+    ...prev,
+    [itemId]: prev[itemId] - 1,
+  }));
 
-    setCartItems((prev) => ({
-      ...prev,
-      [itemId]: prev[itemId] - 1,
-    }));
-
-    try {
-      const response = await axios.delete(
-        url + "api/v1/cart/remove",
-        { itemId },
-        { headers: { token } }
-      );
-
-      if (response.data.success) {
-        toast.success("Item Removed from Cart");
-      } else {
-        toast.error(response.data.message);
+  try {
+    const response = await axios.delete(
+      url + "api/v1/cart/remove",
+      {
+        data: { itemId },
+        headers: {
+          token: token,
+        },
       }
-    } catch (error) {
-      console.log(error);
+    );
+
+    if (response.data.success) {
+      toast.success("Item Removed from Cart");
+    } else {
+      toast.error(response.data.message);
     }
-  };
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   const getTotalCartAmount = () => {
     let totalAmount = 0;
@@ -88,62 +91,70 @@ const StoreContextProvider = (props) => {
     return totalAmount;
   };
 
-  const fetchFoodList = async () => {
-    try {
-      const response = await axios.get(url + "api/v1/food/list",{
-        headers: { token: localStorage.getItem("token") },
-      });
-      console.log("food data : ",response.data)
-      if(!response.data.success){
-        toast.error(response.data.message);
-        localStorage.removeItem("token");
-        setToken("");
-        setCartItems({});
+const fetchFoodList = async () => {
+  try {
+    const response = await axios.get(
+      url + "api/v1/food/list",
+      {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
       }
-      if (response.data.success) {
-        console.log("food found")
-        setFoodList(response.data.data);
-      }
-    } catch (error) {
-      console.log("food not found")
-      console.log(error);
-    }
-  };
+    );
 
-  const loadCartData = async (token) => {
-    try {
-      const response = await axios.get(
-        url + "api/v1/cart/list",
-        {
-          headers: {token: localStorage.getItem("token")},
-        }
-      );
-      if(!response.data.success) {
-        toast.error(response.data.message);
-        localStorage.removeItem("token"); 
+    console.log("Food Response:", response.data);
+
+    if (response.data.success) {
+      setFoodList(response.data.data);
+    } else {
+      toast.error(response.data.message);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const loadCartData = async (userToken) => {
+  try {
+    const response = await axios.get(
+      url + "api/v1/cart/list",
+      {
+        headers: {
+          token: userToken,
+        },
       }
-      if (response.data.success) {
-        setCartItems(response.data.cartData || {});
-      }
-    } catch (error) {
-      console.log(error);
+    );
+
+    console.log("Cart Response:", response.data);
+
+    if (response.data.success) {
+      setCartItems(response.data.cartData || {});
+    } else {
+      toast.error(response.data.message);
       setCartItems({});
     }
-  };
-  useEffect(() => {
-    async function loadData() {
-      await fetchFoodList();
+  } catch (error) {
+    console.log(error);
+    setCartItems({});
+  }
+};
+useEffect(() => {
+  const loadData = async () => {
+    const storedToken = localStorage.getItem("token");
 
-      const storedToken = localStorage.getItem("token");
-
-      if (storedToken) {
-        setToken(storedToken);
-        await loadCartData(storedToken);
-      }
+    if (storedToken) {
+      setToken(storedToken);
     }
 
-    loadData();
-  }, []);
+    await fetchFoodList();
+
+    if (storedToken) {
+      await loadCartData(storedToken);
+    }
+  };
+
+  loadData();
+}, []);
 
   const contextValue = {
     food_list,
