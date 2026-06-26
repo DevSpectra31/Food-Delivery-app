@@ -3,9 +3,14 @@ import React, { useContext } from 'react'
 import "./Fooddisplay.css"
 import { StoreContext } from '../../Context/StoreContext'
 import FoodItem from '../FoodItem/FoodItem'
+import { redirect } from 'react-router-dom'
 
 const Fooddisplay = ({category}) => {
   const { food_list } = useContext(StoreContext)
+  const {token}=useContext(StoreContext)
+  if(!token){
+    redirect("/login")
+  }
   console.log("food_list  :" ,food_list)
   return (
     <div className='food-display' id='food-display'>

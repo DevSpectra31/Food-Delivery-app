@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable react-refresh/only-export-components */
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
@@ -6,9 +7,8 @@ import { toast } from "react-toastify";
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
-
   const [cartItems, setCartItems] = useState({});
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [food_list, setFoodList] = useState([]);
 
   const url = "http://localhost:5000/";
@@ -16,6 +16,8 @@ const StoreContextProvider = (props) => {
   const addToCart = async (itemId) => {
     if (!token) {
       toast.error("Please login first");
+     // navigate("/login")
+    // redirect("/login")
       return;
     }
 
@@ -138,23 +140,23 @@ const loadCartData = async (userToken) => {
     setCartItems({});
   }
 };
+const logout = () => {
+  localStorage.removeItem("token");
+  setToken("");
+  setCartItems({});
+};
 useEffect(() => {
-  const loadData = async () => {
-    const storedToken = localStorage.getItem("token");
-
-    if (storedToken) {
-      setToken(storedToken);
-    }
-
-    await fetchFoodList();
-
-    if (storedToken) {
-      await loadCartData(storedToken);
-    }
-  };
-
-  loadData();
+  fetchFoodList();
 }, []);
+useEffect(() => {
+  if (token) {
+    localStorage.setItem("token", token);
+    loadCartData(token);
+  } else {
+    localStorage.removeItem("token");
+    setCartItems({});
+  }
+}, [token]);
 
   const contextValue = {
     food_list,
@@ -167,6 +169,7 @@ useEffect(() => {
     loadCartData,
     token,
     setToken,
+    logout,
   };
 
   return (

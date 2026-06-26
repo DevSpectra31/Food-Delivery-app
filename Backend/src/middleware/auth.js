@@ -22,7 +22,7 @@ const authMiddleware = async (req, res, next) => {
 
  // console.log("Headers:", req.headers);
  // console.log("Cookies:", req.cookies);
-  const token = req?.cookies.token || req?.headers.token
+  const token =  req?.headers.token;
  console.log("Request URL:", req.originalUrl);
 console.log("Token:", token);
   if (!token) {

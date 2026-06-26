@@ -6,7 +6,8 @@ import Add from './Pages/Add/Add'
 import Order from './Pages/Order/Order'
 import List from './Pages/List/List'
 import Login from './Components/Login/Login'
-
+import {ToastContainer} from "react-toastify"
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <div>
@@ -21,6 +22,11 @@ function App() {
           <Route path='/login' element = {<Login/>}/>
         </Routes>
       </div>
+       <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        theme="colored"
+      />
     </div>
   )
 }
