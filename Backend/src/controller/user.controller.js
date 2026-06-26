@@ -35,16 +35,16 @@ export const registerUser = async (req, res) => {
     const createduser = await User.findById(user._id).select("-password -token");
 
     return res
-      .cookie("token", token, { httpOnly: true })
       .status(200)
       .json({
         message: "user registered successfully",
         createduser,
+        success : true,
       });
   } catch (error) {
     console.error("Error: ", error);
     return res.status(500).json({ message: error.message,
-        success : true,
+        success : false,
      });
   }
 };
@@ -71,7 +71,6 @@ export const loginUser = async (req, res) => {
     const existedUser = await User.findById(user._id).select("-password").lean();
 
     return res
-      .cookie("token", token, { httpOnly: true })
       .status(200)
       .json({
         message: "user logged in successfully",
@@ -89,7 +88,6 @@ export const loginUser = async (req, res) => {
 export const logout = async (req, res) => {
   try {
     return res
-      .clearCookie("token", { httpOnly: true })
       .status(200)
       .json({ message: "user logged out successfully",
         success : true,

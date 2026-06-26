@@ -80,7 +80,7 @@ orderItems.push(itemInfo);
         );
 
         if (verifyResponse.data.success) {
-          toast.success("Payment Successful");
+          toast.success("Order PLaced");
           navigate("/");
         }
       } catch (error) {

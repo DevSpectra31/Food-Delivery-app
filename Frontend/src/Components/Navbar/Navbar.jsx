@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import {StoreContext} from "../../Context/StoreContext";
 import axios from 'axios';
+import { toast } from 'react-toastify';
 const Navbar = ({ setshowLogin }) => {
   const [menu, setmenu] = useState('home')
   const{url,setToken}=useContext(StoreContext)
@@ -14,10 +15,14 @@ const Navbar = ({ setshowLogin }) => {
     try {
       const response=await axios.post(`${url}api/v1/users/logout`,
         {},
+        {
+          headers : token,
+        },
         {withCredentials : true}
       );
       localStorage.removeItem("token")
       setToken('')
+      toast.success("user is logged out")
     } catch (error) {
       console.log(error);
     }

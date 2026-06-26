@@ -23,6 +23,7 @@ const List = ({ url }) => {
     console.log(response)
     if (response.data.success) {
       setList(response.data.data);
+      toast.success("food added are listed")
     } else {
       toast.error("Error");
       navigate("/login")
