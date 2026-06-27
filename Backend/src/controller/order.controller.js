@@ -17,7 +17,7 @@ export const placeOrder = async (req, res) => {
     let orderItems = [];
     for (const item of req.body.items) {
       console.log(req.body.items)
-      const food = await foodModel.findById(item.foodId);
+      const food = await foodModel.findById(item._id);
       console.log("food : ",food)
       if (!food) {
         return res.status(404).json({
