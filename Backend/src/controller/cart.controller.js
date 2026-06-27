@@ -27,7 +27,11 @@ export const addtocart = async (req, res) => {
         // Save to DB and return response
         res
           .status(200)
-          .json({ message: "Item added to cart successfully ",cartData ,});
+          .json({
+            message: "Item added to cart successfully ",
+            cartData:User.cartData,
+            success : true,
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -49,7 +53,7 @@ export const removefromCart = async(req,res)=>{
             message : "food not found"
         })
     }
-        if(cartData[itemId]){
+        if(cartData[itemId]>1){
             cartData[itemId] -= 1;
         }
         else{
@@ -59,6 +63,7 @@ export const removefromCart = async(req,res)=>{
         res.status(200).json({
             message : "Item removed from cart successfully",
             cartData,
+            success:true,
         })
 } catch (error){
     res.status(500).json({ message: error.message });
@@ -68,18 +73,18 @@ export const removefromCart = async(req,res)=>{
 export const getCartItems = async (req, res) => {
     try{
         const user = await User.findById(req.userId);
-        const cartData = user.cartData || {};
-        console.log("cartdata : ",cartData)
-        const itemIds = Object.keys(cartData);
-        const items = await foodModel.find({ _id: { $in: itemIds } });
-        const cartItems = items.map(item => ({
-            ...item._doc,
-            quantity: cartData[item._id] || 0
-        }));
+        const cartData = user.cartData ;
+        if(!cartData){
+            return res.status(200).json({
+                message : "user cartdaata is empty"
+            })
+        }
         res.status(200).json(
         { success: true,
             message: "Cart items fetched successfully",
-             data: cartData });
+            success:true,
+            cartData:user.cartData || {}
+        });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }

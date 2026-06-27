@@ -1,7 +1,8 @@
 import { Navigate } from "react-router-dom";
-
+import { useContext } from "react";
+import { StoreContext } from "../../Context/StoreContext";
 const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem("token");
+  const {token} = useContext(StoreContext)
 
   if (!token) {
     return <Navigate to="/login" replace />;

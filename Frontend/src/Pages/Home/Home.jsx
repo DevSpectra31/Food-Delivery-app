@@ -7,6 +7,7 @@ import Fooddisplay from '../../Components/Fooddisplay/Fooddisplay'
 import AppDownload from '../../Components/AppDownload/AppDownload'
 import { StoreContext } from '../../Context/StoreContext'
 import { useContext } from 'react'
+import ChatBot from '../../Components/Chatbot/Chatbot'
 function Home() {
   const [category, setcategory] = useState('All')
   return (
@@ -15,6 +16,7 @@ function Home() {
       <ExploreMenu category={category} setcategory={setcategory}/>
       <Fooddisplay category={category} setcategory={setcategory}/>
       <AppDownload/>
+      {/* <ChatBot/> */}
     </div>
   )
 }

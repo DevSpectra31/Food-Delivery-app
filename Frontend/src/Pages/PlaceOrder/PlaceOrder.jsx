@@ -50,8 +50,12 @@ orderItems.push(itemInfo);
     console.log("food_list : ", food_list);
     console.log("context url : ",url)
     console.log("orderData : ", orderData);
-    const response= await axios.post(url + "api/v1/order/place",orderData,{headers:{token : localStorage.getItem("token")}});
-    //console.log("response : ",response.data)
+    const response= await axios.post(url + "api/v1/order/place",orderData,
+      {headers: {
+        token : token,
+      }}
+    );
+    console.log("response : ",response.data)
    if (response.data.success) {
   const { razorpayOrder } = response.data;
 
@@ -74,13 +78,13 @@ orderItems.push(itemInfo);
           },
           {
             headers: {
-              token: localStorage.getItem("token"),
+              token: token,
             },
           }
         );
 
         if (verifyResponse.data.success) {
-          toast.success("Payment Successful");
+          toast.success("Order PLaced");
           navigate("/");
         }
       } catch (error) {

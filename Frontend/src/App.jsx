@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useState } from 'react'
 import Navbar from './Components/Navbar/Navbar'
 import { Routes, Route } from 'react-router-dom'
@@ -8,7 +9,9 @@ import Footer from './Components/Footer/Footer'
 import LoginPopup from './Components/LoginPopup/LoginPopup'
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute'
 import Verify from './Pages/Verify/Verify'
-
+import ChatBot from './Components/Chatbot/Chatbot'
+import {ToastContainer} from "react-toastify"
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   const [showLogin, setshowLogin] = useState(false)
 
@@ -61,6 +64,12 @@ function App() {
       </div>
 
       <Footer />
+      <ChatBot/>
+       <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        theme="colored"
+      />
     </>
   )
 }

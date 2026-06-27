@@ -1,11 +1,33 @@
 import React, { useState } from 'react'
-import "./Navbar.css"
+import "./Navbar.css";
 import { assets } from '../../assets/assets'
-import { Link } from 'react-router-dom'
-
+import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import {StoreContext} from "../../Context/StoreContext";
+import axios from 'axios';
+import { toast } from 'react-toastify';
 const Navbar = ({ setshowLogin }) => {
   const [menu, setmenu] = useState('home')
-
+  const{token,url,setToken}=useContext(StoreContext)
+  console.log("navbar token : ",token)
+  const logout = async()=>{
+    try {
+      const response=await axios.post(`${url}api/v1/users/logout`,
+        {},
+        {
+          headers :{
+            token : token,
+          }
+        },
+        {withCredentials : true}
+      );
+      localStorage.removeItem("token")
+      setToken('')
+      toast.success("user is logged out")
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <div className='navbar'>
       <Link to="/">
@@ -48,7 +70,17 @@ const Navbar = ({ setshowLogin }) => {
           </Link>
           <div className='dot'></div>
         </div>
-        <button onClick={() => setshowLogin(true)}>Sign in</button>
+        {
+          !token ? (
+            <button onClick={()=>setshowLogin(true)}>
+              Login
+            </button>
+          ) : (
+            <button onClick={logout}>
+              Logout
+            </button>
+          )
+        }
       </div>
     </div>
   )

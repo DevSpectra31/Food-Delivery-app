@@ -7,8 +7,7 @@ export const StoreContext = createContext(null);
 const StoreContextProvider = (props) => {
   const [token, setToken] = useState("");
   const [admin, setAdmin] = useState(false);
-
-
+  const url = "http://localhost:5000/"
   useEffect(() => {
     async function loadData() {
       if (localStorage.getItem("token")) {

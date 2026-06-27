@@ -46,6 +46,7 @@ const Add = () => {
       });
       setimage(false);
       toast.success(response.data.message);
+      navigate("/list")
       console.log("food got uploaded")
     } else {
      if (response.data.message === "Not Authorized Login Again") {
