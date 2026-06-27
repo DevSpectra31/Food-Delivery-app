@@ -16,8 +16,9 @@ export const placeOrder = async (req, res) => {
     let totalAmount = 0;
     let orderItems = [];
     for (const item of req.body.items) {
-      const food = await foodModel.findById(item._id);
-      console.log("food : ",item.foodId)
+      console.log(req.body.items)
+      const food = await foodModel.findById(item.foodId);
+      console.log("food : ",food)
       if (!food) {
         return res.status(404).json({
           success: false,
@@ -30,6 +31,7 @@ export const placeOrder = async (req, res) => {
         name: food.name,
         price: food.price,
         quantity: item.quantity,
+        image : food.image,
       });
 
       totalAmount += food.price * item.quantity;
@@ -106,6 +108,23 @@ export const verifyorder = async (req, res) => {
     console.log(error);
 
     return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const listOrders = async (req, res) => {
+  try {
+    console.log("list order api hit ")
+    const orders = await Order.find({}).sort({ createdAt: -1 });
+
+    res.json({
+      success: true,
+      data: orders,
+    });
+  } catch (error) {
+    res.json({
       success: false,
       message: error.message,
     });

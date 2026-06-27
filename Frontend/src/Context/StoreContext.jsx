@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable react-refresh/only-export-components */
 import axios from "axios";
+import { useContext } from "react";
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -10,9 +11,7 @@ const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [food_list, setFoodList] = useState([]);
-
-  const url = "http://localhost:5000/";
-
+  const url = "http://localhost:5000/"
   const addToCart = async (itemId) => {
     if (!token) {
       toast.error("Please login first");
@@ -32,7 +31,7 @@ const StoreContextProvider = (props) => {
 
     try {
       const response = await axios.post(
-        url + "api/v1/cart/add",
+        `${url}api/v1/cart/add`,
         { itemId },
         { headers: { token } }
       );

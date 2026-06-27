@@ -8,15 +8,16 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 const Navbar = ({ setshowLogin }) => {
   const [menu, setmenu] = useState('home')
-  const{url,setToken}=useContext(StoreContext)
-  const token = localStorage.getItem("token")
+  const{token,url,setToken}=useContext(StoreContext)
   console.log("navbar token : ",token)
   const logout = async()=>{
     try {
       const response=await axios.post(`${url}api/v1/users/logout`,
         {},
         {
-          headers : token,
+          headers :{
+            token : token,
+          }
         },
         {withCredentials : true}
       );
