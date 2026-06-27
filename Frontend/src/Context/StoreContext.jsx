@@ -92,61 +92,60 @@ const StoreContextProvider = (props) => {
     return totalAmount;
   };
 
-const fetchFoodList = async () => {
+const loadCartData = async (token) => {
   try {
-    const response = await axios.get(
-      url + "api/v1/food/list",
-      {
-        headers: {
-          token: localStorage.getItem("token"),
-        },
-      }
-    );
+    const response = await axios.get(url + "api/v1/cart/list", {
+      headers: { token: token || localStorage.getItem("token") },
+    });
 
-    console.log("Food Response:", response.data);
-
-    if (response.data.success) {
-      setFoodList(response.data.data);
-    } else {
+    if (!response.data.success) {
       toast.error(response.data.message);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const loadCartData = async (userToken) => {
-  try {
-    const response = await axios.get(
-      url + "api/v1/cart/list",
-      {
-        headers: {
-          token: userToken,
-        },
-      }
-    );
-
-    console.log("Cart Response:", response.data);
-
-    if (response.data.success) {
-      setCartItems(response.data.cartData || {});
-    } else {
-      toast.error(response.data.message);
+      localStorage.removeItem("token");
+      setToken("");
       setCartItems({});
+      return;
     }
+
+    setCartItems(response.data.cartData || {});
   } catch (error) {
     console.log(error);
     setCartItems({});
   }
 };
+
+const fetchFoodList = async () => {
+  try {
+    const response = await axios.get(url + "api/v1/food/list", {
+      headers: {
+        token: localStorage.getItem("token"),
+      },
+    });
+
+    if (response.data.success) {
+      setFoodList(response.data.foodList || response.data.data || []);
+    } else {
+      toast.error(response.data.message);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const logout = () => {
   localStorage.removeItem("token");
   setToken("");
   setCartItems({});
 };
+
 useEffect(() => {
   fetchFoodList();
+
+  const storedToken = localStorage.getItem("token");
+  if (storedToken) {
+    setToken(storedToken);
+  }
 }, []);
+
 useEffect(() => {
   if (token) {
     localStorage.setItem("token", token);
