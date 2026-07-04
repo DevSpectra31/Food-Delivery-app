@@ -1,18 +1,27 @@
 .food-display {
-  margin-top: 30px;
-  padding: 0 8%;
+  margin-top: 40px;
+  padding: 20px 0;
+  width: 100%;
 }
 
 .food-display h2 {
   font-size: 32px;
   font-weight: 700;
   margin-bottom: 30px;
-  color: #262626;
+  color: var(--text-title);
+  letter-spacing: -0.5px;
 }
 
 .food-display-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
   row-gap: 40px;
+}
+
+@media(max-width: 750px) {
+  .food-display-list {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }

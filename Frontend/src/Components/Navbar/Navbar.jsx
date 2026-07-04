@@ -60,6 +60,7 @@ const Navbar = ({ setshowLogin }) => {
         <a href="#explore-menu" onClick={() => setmenu("menu")} className={menu === "menu" ? "active" : ""}>menu</a>
         <a href="#app-download" onClick={() => setmenu("mobile-app")} className={menu === "mobile-app" ? "active" : ""}>mobile-app</a>
         <a href="#footer" onClick={() => setmenu("contact us")} className={menu === "contact us" ? "active" : ""}>contact us</a>
+        {token && <Link to="/myorders" onClick={() => setmenu("myorders")} className={menu === "myorders" ? "active" : ""}>my orders</Link>}
       </ul>
 
       <div className='navbar-right'>
