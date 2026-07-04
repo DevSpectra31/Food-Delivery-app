@@ -9,6 +9,7 @@ import Footer from './Components/Footer/Footer'
 import LoginPopup from './Components/LoginPopup/LoginPopup'
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute'
 import Verify from './Pages/Verify/Verify'
+import MyOrders from './Pages/MyOrders/MyOrders'
 import ChatBot from './Components/Chatbot/Chatbot'
 import {ToastContainer} from "react-toastify"
 import "react-toastify/dist/ReactToastify.css";
@@ -57,6 +58,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Verify/>
+              </ProtectedRoute>
+            }
+          />
+           <Route
+            path='/myorders'
+            element={
+              <ProtectedRoute>
+                <MyOrders/>
               </ProtectedRoute>
             }
           />

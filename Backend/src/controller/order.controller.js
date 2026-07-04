@@ -130,3 +130,18 @@ export const listOrders = async (req, res) => {
     });
   }
 };
+
+export const userOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({ userId: req.userId }).sort({ date: -1 });
+    res.json({
+      success: true,
+      data: orders,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
