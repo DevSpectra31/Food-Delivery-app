@@ -67,7 +67,8 @@
   gap: 16px;
 }
 
-.login-popup-inputs input {
+.login-popup-inputs input,
+.login-popup-inputs select {
   width: 100%;
   padding: 14px 16px;
   border: 1px solid var(--border-color);
@@ -79,7 +80,8 @@
   transition: all 0.2s ease;
 }
 
-.login-popup-inputs input:focus {
+.login-popup-inputs input:focus,
+.login-popup-inputs select:focus {
   border-color: var(--primary-color);
   background: white;
   box-shadow: 0 0 0 3px rgba(255, 75, 30, 0.1);

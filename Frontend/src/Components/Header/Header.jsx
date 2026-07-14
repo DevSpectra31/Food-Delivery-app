@@ -10,6 +10,29 @@ function Header() {
               <button>View Menu</button>
             </a>
         </div>
+        <div className="header-stats">
+          <div className="stat-card">
+            <span className="stat-icon">🍳</span>
+            <div className="stat-info">
+              <h3>50+</h3>
+              <p>Unique Cuisines</p>
+            </div>
+          </div>
+          <div className="stat-card">
+            <span className="stat-icon">⭐</span>
+            <div className="stat-info">
+              <h3>15k+</h3>
+              <p>Happy Reviews</p>
+            </div>
+          </div>
+          <div className="stat-card">
+            <span className="stat-icon">🚀</span>
+            <div className="stat-info">
+              <h3>25m</h3>
+              <p>Avg Delivery</p>
+            </div>
+          </div>
+        </div>
     </div>
   )
 }

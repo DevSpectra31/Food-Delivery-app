@@ -1,5 +1,5 @@
 import express from "express"
-import { placeOrder ,verifyorder,listOrders,userOrders} from "../controller/order.controller.js"
+import { placeOrder ,verifyorder,listOrders,userOrders,updateStatus} from "../controller/order.controller.js"
 import authMiddleware from "../middleware/auth.js"
 
 const app = express.Router();
@@ -11,4 +11,5 @@ app.post("/place",authMiddleware,placeOrder)
 app.post("/verifyorder",authMiddleware,verifyorder)
 app.get("/list",authMiddleware,listOrders)
 app.post("/userorders",authMiddleware,userOrders)
+app.post("/status",authMiddleware,updateStatus)
 export default app;

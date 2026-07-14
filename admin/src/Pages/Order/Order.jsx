@@ -33,6 +33,32 @@ const Order = ({ url }) => {
     }
   };
 
+  const statusHandler = async (event, orderId) => {
+    try {
+      const response = await axios.post(
+        `${url}api/v1/order/status`,
+        {
+          orderId,
+          status: event.target.value,
+        },
+        {
+          headers: {
+            token: token,
+          },
+        }
+      );
+      if (response.data.success) {
+        toast.success(response.data.message || "Status updated successfully");
+        await fetchOrders();
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Error updating status");
+    }
+  };
+
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -82,10 +108,10 @@ const Order = ({ url }) => {
 
               <p>₹{order.amount}</p>
 
-              <select defaultValue={order.status}>
-                <option>Food Processing</option>
-                <option>Out for Delivery</option>
-                <option>Delivered</option>
+              <select onChange={(event) => statusHandler(event, order._id)} value={order.status}>
+                <option value="Food Processing">Food Processing</option>
+                <option value="Out for Delivery">Out for Delivery</option>
+                <option value="Delivered">Delivered</option>
               </select>
             </div>
           );

@@ -1,20 +1,20 @@
 .explore-menu {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 40px 0;
+  gap: 20px;
+  padding: 60px 0 40px;
   width: 100%;
 }
 
 .explore-menu h1 {
-  font-size: 32px;
-  font-weight: 700;
+  font-size: clamp(26px, 3.5vw, 36px);
+  font-weight: 800;
   color: var(--text-title);
   letter-spacing: -0.5px;
 }
 
 .explore-menu p {
-  max-width: 60%;
+  max-width: 55%;
   color: var(--text-muted);
   line-height: 1.6;
   font-size: 16px;
@@ -24,10 +24,10 @@
 .explore-menu-list {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 32px;
   overflow-x: auto;
-  margin: 30px 0;
-  padding: 10px 4px;
+  margin: 40px 0 20px;
+  padding: 12px 6px;
 }
 
 /* Hide scrollbar */
@@ -37,39 +37,41 @@
 
 .explore-menu-list-item {
   text-align: center;
-  min-width: 100px;
+  min-width: 110px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: all 0.3s ease;
 }
 
 .explore-menu-list-item img {
-  width: 90px;
-  height: 90px;
+  width: 96px;
+  height: 96px;
   object-fit: cover;
   border-radius: var(--radius-full);
   padding: 4px;
   background: white;
-  box-shadow: var(--shadow-sm);
-  border: 2px solid transparent;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 3px solid transparent;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .explore-menu-list-item p {
-  margin-top: 12px;
+  margin-top: 14px;
   color: var(--text-body);
   font-family: var(--font-title);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 15px;
   transition: color 0.3s ease;
+  max-width: 100%;
 }
 
 /* Hover effects */
 .explore-menu-list-item:hover img {
-  transform: translateY(-5px) scale(1.05);
-  box-shadow: var(--shadow-md);
-  border-color: var(--primary-light);
+  transform: translateY(-8px) scale(1.06);
+  box-shadow: 0 10px 25px rgba(255, 75, 30, 0.15);
+  border-color: rgba(255, 75, 30, 0.3);
 }
 
 .explore-menu-list-item:hover p {
@@ -80,29 +82,34 @@
 .explore-menu-list-item img.active {
   border-color: var(--primary-color);
   background: white;
-  box-shadow: 0 0 16px rgba(255, 75, 30, 0.2);
-  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(255, 75, 30, 0.25);
+  transform: translateY(-8px) scale(1.08);
 }
 
 .explore-menu-list-item img.active + p {
   color: var(--primary-color);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .explore-menu hr {
-  margin: 20px 0;
-  height: 1px;
-  background-color: var(--border-color);
+  margin: 30px 0;
+  height: 1.5px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.05), var(--border-color), rgba(0, 0, 0, 0.05));
   border: none;
 }
 
 @media(max-width: 1050px) {
+  .explore-menu {
+    padding: 40px 0 20px;
+    align-items: center;
+    text-align: center;
+  }
   .explore-menu p {
-    max-width: 100%;
+    max-width: 90%;
     font-size: 14px;
   }
   .explore-menu-list-item img {
-    width: 80px;
-    height: 80px;
+    width: 86px;
+    height: 86px;
   }
 }

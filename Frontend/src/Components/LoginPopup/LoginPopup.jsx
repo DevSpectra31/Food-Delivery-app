@@ -13,6 +13,7 @@ const LoginPopup = () => {
     name: "",
     email: "",
     password: "",
+    role: "user",
   });
   const navigate = useNavigate();
   const { setshowLogin } = useContext(StoreContext);
@@ -50,6 +51,7 @@ const LoginPopup = () => {
           name: "",
           email: "",
           password: "",
+          role: "user",
         });
 
         setCurrentState("Login");
@@ -106,6 +108,18 @@ const LoginPopup = () => {
               onChange={onChangeHandler}
               required
             />
+          )}
+
+          {currentState === "Sign Up" && (
+            <select
+              name="role"
+              value={data.role}
+              onChange={onChangeHandler}
+              required
+            >
+              <option value="user">Register as User</option>
+              <option value="admin">Register as Admin</option>
+            </select>
           )}
 
           <input
